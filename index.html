@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>SPI言語トレーニング</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>SPI言語トレーニング</h1>
+  <p class="subtitle">テストセンター対策・言語分野の自主学習アプリ</p>
+</header>
+
+<main class="app-main">
+
+  <!-- ホーム画面 -->
+  <section id="screen-home" class="screen active">
+    <div class="panel">
+      <h2>分野を選ぶ</h2>
+      <div id="category-grid" class="category-grid"></div>
+    </div>
+
+    <div class="panel">
+      <h2>問題数を選んで開始</h2>
+      <div class="count-buttons">
+        <button class="count-btn" data-count="5">5問</button>
+        <button class="count-btn" data-count="10">10問</button>
+        <button class="count-btn" data-count="20">20問</button>
+        <button class="count-btn" data-count="all">全問</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>苦手問題を復習</h2>
+      <p class="hint">直近で間違えた問題だけを出題します。（現在 <span id="weak-count">0</span> 問）</p>
+      <button id="review-btn" class="secondary-btn" disabled>苦手問題を復習する</button>
+    </div>
+
+    <div class="panel">
+      <button id="reset-btn" class="text-btn">学習記録をリセットする</button>
+    </div>
+  </section>
+
+  <!-- クイズ画面 -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-header">
+      <span id="quiz-category-label" class="badge"></span>
+      <span id="quiz-progress" class="progress-text"></span>
+    </div>
+    <div class="progress-bar-outer"><div id="quiz-progress-bar" class="progress-bar-inner"></div></div>
+
+    <div class="panel">
+      <p id="quiz-instruction" class="instruction"></p>
+      <div id="quiz-prompt" class="prompt"></div>
+      <div id="quiz-choices" class="choices"></div>
+    </div>
+
+    <div id="explanation-box" class="explanation-box">
+      <p id="explanation-text"></p>
+    </div>
+
+    <button id="next-btn" class="primary-btn">次の問題へ</button>
+  </section>
+
+  <!-- 結果画面 -->
+  <section id="screen-result" class="screen">
+    <div class="panel result-panel">
+      <h2>結果</h2>
+      <div class="result-score" id="result-score">0 / 0</div>
+      <div class="result-rate" id="result-rate">0%</div>
+      <div id="result-breakdown" class="result-breakdown"></div>
+    </div>
+    <button id="retry-btn" class="primary-btn">ホームに戻る</button>
+  </section>
+
+</main>
+
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
