@@ -248,15 +248,16 @@
     });
 
     document.getElementById('explanation-box').classList.remove('show');
+    document.getElementById('explanation-box').classList.remove('dont-know');
     document.getElementById('next-btn').classList.remove('show');
+    document.getElementById('dont-know-btn').disabled = false;
   }
 
-  function selectChoice(idx) {
-    if (answered) return;
-    answered = true;
+  function finishQuestion(idx) {
     const q = currentQuiz[currentIndex];
-    const correct = idx === q.answerIndex;
-    sessionResults.push({ id: q.id, category: q.category, correct: correct });
+    const dontKnow = idx === null;
+    const correct = !dontKnow && idx === q.answerIndex;
+    sessionResults.push({ id: q.id, category: q.category, correct: correct, dontKnow: dontKnow });
     updateStats(q.id, correct);
 
     const buttons = document.querySelectorAll('.choice-btn');
@@ -265,12 +266,26 @@
       if (i === q.answerIndex) btn.classList.add('correct');
       else if (i === idx) btn.classList.add('wrong');
     });
+    document.getElementById('dont-know-btn').disabled = true;
 
     document.getElementById('explanation-text').textContent = q.explanation;
     document.getElementById('explanation-box').classList.add('show');
+    document.getElementById('explanation-box').classList.toggle('dont-know', dontKnow);
     document.getElementById('next-btn').classList.add('show');
     document.getElementById('next-btn').textContent =
       currentIndex === currentQuiz.length - 1 ? '結果を見る' : '次の問題へ';
+  }
+
+  function selectChoice(idx) {
+    if (answered) return;
+    answered = true;
+    finishQuestion(idx);
+  }
+
+  function selectDontKnow() {
+    if (answered) return;
+    answered = true;
+    finishQuestion(null);
   }
 
   function updateStats(id, correct) {
@@ -289,6 +304,10 @@
     document.getElementById('result-score').textContent = correctCount + ' / ' + total;
     document.getElementById('result-rate').textContent = (total ? Math.round((correctCount / total) * 100) : 0) + '%';
 
+    const dontKnowCount = sessionResults.filter((r) => r.dontKnow).length;
+    document.getElementById('result-dontknow').textContent =
+      dontKnowCount > 0 ? '（うち「わからない」: ' + dontKnowCount + '問）' : '';
+
     const breakdown = document.getElementById('result-breakdown');
     breakdown.innerHTML = '';
     Object.keys(CATEGORY_LABELS).forEach((cat) => {
@@ -303,6 +322,8 @@
 
     renderHome();
   }
+
+  document.getElementById('dont-know-btn').addEventListener('click', selectDontKnow);
 
   document.getElementById('next-btn').addEventListener('click', () => {
     if (currentIndex < currentQuiz.length - 1) {
