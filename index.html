@@ -39,8 +39,46 @@
     </div>
 
     <div class="panel">
+      <h2>単語帳で暗記する</h2>
+      <p class="hint"><span id="tango-total-count">0</span>語中、<span id="tango-known-count">0</span>語を「覚えた」判定済み</p>
+      <div id="tango-category-grid" class="category-grid"></div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="tango-unknown-only">
+        まだ覚えていない語句だけ出題する
+      </label>
+      <button id="tango-start-btn" class="secondary-btn">単語帳を始める</button>
+    </div>
+
+    <div class="panel">
       <button id="reset-btn" class="text-btn">学習記録をリセットする</button>
     </div>
+  </section>
+
+  <!-- 単語帳画面 -->
+  <section id="screen-tango" class="screen">
+    <div class="quiz-header">
+      <span class="badge">単語帳</span>
+      <span id="tango-progress" class="progress-text"></span>
+    </div>
+    <div class="progress-bar-outer"><div id="tango-progress-bar" class="progress-bar-inner"></div></div>
+
+    <div id="tango-card" class="tango-card">
+      <div class="tango-card-category" id="tango-card-category"></div>
+      <div class="tango-card-word" id="tango-card-word"></div>
+      <div id="tango-card-back" class="tango-card-back">
+        <div class="tango-card-reading" id="tango-card-reading"></div>
+        <div class="tango-card-meaning" id="tango-card-meaning"></div>
+        <div class="tango-card-example" id="tango-card-example"></div>
+      </div>
+      <p class="tango-flip-hint" id="tango-flip-hint">タップして意味を表示</p>
+    </div>
+
+    <div id="tango-judge-buttons" class="tango-judge-buttons">
+      <button id="tango-unknown-btn" class="judge-btn judge-unknown">まだ覚えていない</button>
+      <button id="tango-known-btn" class="judge-btn judge-known">覚えた</button>
+    </div>
+
+    <button id="tango-home-btn" class="text-btn">ホームに戻る</button>
   </section>
 
   <!-- クイズ画面 -->
@@ -78,6 +116,7 @@
 </main>
 
 <script src="js/questions.js"></script>
+<script src="js/tango.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
