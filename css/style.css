@@ -236,6 +236,87 @@ body {
 }
 .breakdown-row:last-child { border-bottom: none; }
 
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 12px 0;
+  cursor: pointer;
+}
+.checkbox-row input { width: 16px; height: 16px; }
+
+.tango-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 20px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.tango-card-category {
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.tango-card-word {
+  font-size: 2rem;
+  font-weight: 800;
+}
+.tango-card-back {
+  display: none;
+  margin-top: 18px;
+}
+.tango-card.flipped .tango-card-back { display: block; }
+.tango-card-reading {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.tango-card-meaning {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.tango-card-example {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.tango-flip-hint {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin: 18px 0 0;
+}
+.tango-card.flipped .tango-flip-hint { display: none; }
+
+.tango-judge-buttons {
+  display: none;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.tango-judge-buttons.show { display: flex; }
+.judge-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--panel-bg);
+  color: var(--text);
+}
+.judge-unknown { border-color: var(--wrong); color: var(--wrong); }
+.judge-known { border-color: var(--correct); color: var(--correct); }
+
 @media (max-width: 400px) {
   .category-grid { grid-template-columns: 1fr; }
 }
