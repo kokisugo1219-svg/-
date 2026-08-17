@@ -17,7 +17,7 @@ GitHub Pages で公開する場合は、リポジトリの Settings > Pages で�
 
 ## 機能
 
-- 出題分野: 二語の関係 / 語句の意味・用法 / 文の並び替え・空欄補充（計689問）
+- 出題分野: 語句の意味 / 語句の用法 / 二語の関係 / 空欄補充 / 文の並び替え（計689問）
 - 5問・10問・20問・全問から出題数を選択可能
 - 正解・不正解を即時フィードバック＋解説付きで表示
 - 正誤履歴を `localStorage` に保存し、分野ごとの正答率を表示
@@ -39,7 +39,7 @@ GitHub Pages で公開する場合は、リポジトリの Settings > Pages で�
 ```js
 {
   id: 'nigo-021',                // ユニークなID
-  category: 'nigo',              // 'nigo' | 'imiyoho' | 'bunpo'
+  category: 'nigo',              // 'goi_imi' | 'goi_yoho' | 'nigo' | 'kuran' | 'narabikae'
   instruction: '設問の指示文',
   promptHTML: '出題内容(HTML可)',
   choices: ['選択肢1', '選択肢2', '選択肢3', '選択肢4', '選択肢5'],
