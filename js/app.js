@@ -3,6 +3,7 @@
 
   const STORAGE_KEY = 'spiLangApp_v1';
   const TANGO_STORAGE_KEY = 'spiLangApp_tango_v1';
+  const BLOCK_SIZE = 20;
 
   function loadStats() {
     try {
@@ -109,6 +110,8 @@
       grid.appendChild(card);
     });
 
+    renderBlockGrid();
+
     const weak = getWeakQuestions();
     document.getElementById('weak-count').textContent = weak.length;
     document.getElementById('review-btn').disabled = weak.length === 0;
@@ -207,6 +210,15 @@
     renderHome();
   });
 
+  function beginQuizWithPool(pool) {
+    if (pool.length === 0) return;
+    currentQuiz = shuffle(pool).map(prepareQuestion);
+    currentIndex = 0;
+    sessionResults = [];
+    showScreen('quiz');
+    renderQuestion();
+  }
+
   function startQuiz(categoryKey, count, reviewMode) {
     let pool;
     if (reviewMode) {
@@ -214,17 +226,55 @@
     } else {
       pool = QUESTIONS.filter((q) => categoryKey === 'all' || q.category === categoryKey);
     }
-    pool = shuffle(pool);
     if (count !== 'all') {
-      pool = pool.slice(0, Math.min(Number(count), pool.length));
+      pool = shuffle(pool).slice(0, Math.min(Number(count), pool.length));
     }
-    if (pool.length === 0) return;
+    beginQuizWithPool(pool);
+  }
 
-    currentQuiz = pool.map(prepareQuestion);
-    currentIndex = 0;
-    sessionResults = [];
-    showScreen('quiz');
-    renderQuestion();
+  function getQuestionsForCategory(categoryKey) {
+    return QUESTIONS.filter((q) => categoryKey === 'all' || q.category === categoryKey);
+  }
+
+  function getBlocks(categoryKey) {
+    const qs = getQuestionsForCategory(categoryKey);
+    const blocks = [];
+    for (let i = 0; i < qs.length; i += BLOCK_SIZE) {
+      blocks.push({ index: blocks.length, questions: qs.slice(i, i + BLOCK_SIZE) });
+    }
+    return blocks;
+  }
+
+  function getBlockStats(questions) {
+    let attempts = 0;
+    let correct = 0;
+    questions.forEach((q) => {
+      const s = stats[q.id];
+      if (s) {
+        attempts += s.attempts;
+        correct += s.correct;
+      }
+    });
+    return { attempts, correct, rate: attempts ? Math.round((correct / attempts) * 100) : null };
+  }
+
+  function renderBlockGrid() {
+    const grid = document.getElementById('block-grid');
+    grid.innerHTML = '';
+    const blocks = getBlocks(selectedCategory);
+    blocks.forEach((b) => {
+      const s = getBlockStats(b.questions);
+      const startNum = b.index * BLOCK_SIZE + 1;
+      const endNum = startNum + b.questions.length - 1;
+      const card = document.createElement('div');
+      card.className = 'cat-card';
+      card.innerHTML =
+        '<div class="cat-name">' + startNum + '〜' + endNum + '</div>' +
+        '<div class="cat-rate">' + (s.rate !== null ? s.rate + '% 正答率' : '未挑戦') + '</div>' +
+        '<div class="cat-count">' + b.questions.length + '問</div>';
+      card.addEventListener('click', () => beginQuizWithPool(b.questions));
+      grid.appendChild(card);
+    });
   }
 
   function renderQuestion() {
