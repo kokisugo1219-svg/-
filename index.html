@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>SPI言語トレーニング</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
-<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
 <header class="app-header">
@@ -20,23 +20,6 @@
     <div class="panel">
       <h2>分野を選ぶ</h2>
       <div id="category-grid" class="category-grid"></div>
-    </div>
-
-    <div class="panel">
-      <h2>ブロックで進める（20問ごと）</h2>
-      <p class="hint">選んだ分野を20問ずつのブロックに分けます。ブロックを選ぶとその20問がそのまま出題されるので、順番に潰したり、同じブロックを繰り返し周回できます。</p>
-      <div id="block-grid" class="category-grid"></div>
-    </div>
-
-    <div class="panel">
-      <h2>問題数を選んで開始</h2>
-      <p class="hint">分野全体からランダムに出題します。</p>
-      <div class="count-buttons">
-        <button class="count-btn" data-count="5">5問</button>
-        <button class="count-btn" data-count="10">10問</button>
-        <button class="count-btn" data-count="20">20問</button>
-        <button class="count-btn" data-count="all">全問</button>
-      </div>
     </div>
 
     <div class="panel">
@@ -59,6 +42,32 @@
     <div class="panel">
       <button id="reset-btn" class="text-btn">学習記録をリセットする</button>
     </div>
+  </section>
+
+  <!-- 分野詳細画面 -->
+  <section id="screen-category" class="screen">
+    <div class="quiz-header">
+      <span id="category-detail-label" class="badge"></span>
+    </div>
+
+    <div class="panel">
+      <h2>ブロックで進める（20問ごと）</h2>
+      <p class="hint">20問ずつのブロックに分けています。ブロックを選ぶとその20問がそのまま出題されるので、順番に潰したり、同じブロックを繰り返し周回できます。</p>
+      <div id="block-grid" class="category-grid"></div>
+    </div>
+
+    <div class="panel">
+      <h2>問題数を選んで開始</h2>
+      <p class="hint">この分野全体からランダムに出題します。</p>
+      <div class="count-buttons">
+        <button class="count-btn" data-count="5">5問</button>
+        <button class="count-btn" data-count="10">10問</button>
+        <button class="count-btn" data-count="20">20問</button>
+        <button class="count-btn" data-count="all">全問</button>
+      </div>
+    </div>
+
+    <button id="category-home-btn" class="text-btn">ホームに戻る</button>
   </section>
 
   <!-- 単語帳画面 -->
@@ -125,8 +134,8 @@
 
 </main>
 
-<script src="js/questions.js?v=7"></script>
-<script src="js/tango.js?v=7"></script>
-<script src="js/app.js?v=7"></script>
+<script src="js/questions.js?v=8"></script>
+<script src="js/tango.js?v=8"></script>
+<script src="js/app.js?v=8"></script>
 </body>
 </html>

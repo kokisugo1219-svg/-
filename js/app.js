@@ -42,6 +42,7 @@
 
   const screens = {
     home: document.getElementById('screen-home'),
+    category: document.getElementById('screen-category'),
     quiz: document.getElementById('screen-quiz'),
     result: document.getElementById('screen-result'),
     tango: document.getElementById('screen-tango'),
@@ -89,28 +90,26 @@
     });
   }
 
+  function getCategoryOptions() {
+    return [{ key: 'all', label: 'すべて' }].concat(
+      Object.keys(CATEGORY_LABELS).map((key) => ({ key, label: CATEGORY_LABELS[key] }))
+    );
+  }
+
   function renderHome() {
     const grid = document.getElementById('category-grid');
     grid.innerHTML = '';
-    const cats = [{ key: 'all', label: 'すべて' }].concat(
-      Object.keys(CATEGORY_LABELS).map((key) => ({ key, label: CATEGORY_LABELS[key] }))
-    );
-    cats.forEach((c) => {
+    getCategoryOptions().forEach((c) => {
       const s = getCategoryStats(c.key);
       const card = document.createElement('div');
-      card.className = 'cat-card' + (selectedCategory === c.key ? ' selected' : '');
+      card.className = 'cat-card';
       card.innerHTML =
         '<div class="cat-name">' + c.label + '</div>' +
         '<div class="cat-rate">' + (s.rate !== null ? s.rate + '% 正答率' : '未挑戦') + '</div>' +
         '<div class="cat-count">' + s.attempts + '問 挑戦済み</div>';
-      card.addEventListener('click', () => {
-        selectedCategory = c.key;
-        renderHome();
-      });
+      card.addEventListener('click', () => openCategoryScreen(c.key));
       grid.appendChild(card);
     });
-
-    renderBlockGrid();
 
     const weak = getWeakQuestions();
     document.getElementById('weak-count').textContent = weak.length;
@@ -276,6 +275,19 @@
       grid.appendChild(card);
     });
   }
+
+  function openCategoryScreen(categoryKey) {
+    selectedCategory = categoryKey;
+    const label = getCategoryOptions().find((c) => c.key === categoryKey);
+    document.getElementById('category-detail-label').textContent = label ? label.label : '';
+    renderBlockGrid();
+    showScreen('category');
+  }
+
+  document.getElementById('category-home-btn').addEventListener('click', () => {
+    showScreen('home');
+    renderHome();
+  });
 
   function renderQuestion() {
     answered = false;
